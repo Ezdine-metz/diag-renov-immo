@@ -321,9 +321,9 @@ function EcoAidesSimulator({ tk }) {
 
 // ── EmailJS config ─────────────────────────────────────────────
 // Replace these three values with your own from emailjs.com
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz456'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Account → API Keys → Public Key
+const EMAILJS_SERVICE_ID  = 'service_mgz9j18';
+const EMAILJS_TEMPLATE_ID = 'template_ixz0xiv';
+const EMAILJS_PUBLIC_KEY  = '9xwgFTKD01ItBXD0r';
 
 function EcoContactForm({ tk }) {
   const [selected, setSelected] = React.useState([]);
