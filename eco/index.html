@@ -906,14 +906,14 @@
           <h3 class="editable">Demande de contact</h3>
           <form onsubmit="handleForm(event)">
             <div class="frow">
-              <div class="fg"><label>Prénom</label><input type="text" placeholder="Jean" required /></div>
-              <div class="fg"><label>Nom</label><input type="text" placeholder="Dupont" required /></div>
+              <div class="fg"><label>Prénom</label><input name="prenom" type="text" placeholder="Jean" required /></div>
+              <div class="fg"><label>Nom</label><input name="nom" type="text" placeholder="Dupont" required /></div>
             </div>
-            <div class="fg"><label>Téléphone</label><input type="tel" placeholder="06 12 34 56 78" required /></div>
-            <div class="fg"><label>Email</label><input type="email" placeholder="jean@exemple.fr" required /></div>
+            <div class="fg"><label>Téléphone</label><input name="telephone" type="tel" placeholder="06 12 34 56 78" required /></div>
+            <div class="fg"><label>Email</label><input name="email" type="email" placeholder="jean@exemple.fr" required /></div>
             <div class="fg">
               <label>Prestation souhaitée</label>
-              <select>
+              <select name="prestation">
                 <option value="">Choisir…</option>
                 <option>DPE</option>
                 <option>Audit énergétique</option>
@@ -923,7 +923,7 @@
                 <option>Renseignements généraux</option>
               </select>
             </div>
-            <div class="fg"><label>Message (facultatif)</label><textarea placeholder="Décrivez votre projet en quelques mots…"></textarea></div>
+            <div class="fg"><label>Message (facultatif)</label><textarea name="message" placeholder="Décrivez votre projet en quelques mots…"></textarea></div>
             <button type="submit" class="btn btn-lime" style="width:100%;font-size:15px;">
               Envoyer ma demande →
             </button>
@@ -1025,14 +1025,33 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.count').forEach(el => cio.observe(el));
 
-  /* Form */
+  /* Form — EmailJS */
   function handleForm(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = '✓ Demande envoyée — nous vous rappelons bientôt !';
-    btn.style.background = '#2a5c35';
-    btn.style.color = '#c8e6a0';
+    const form = e.target;
+    const btn  = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Envoi en cours…';
     btn.disabled = true;
+
+    emailjs.send('service_mgz9j18', 'template_ixz0xiv', {
+      to_email:   'iyedselmifizz@gmail.com',
+      from_name:  form.prenom.value + ' ' + form.nom.value,
+      from_email: form.email.value,
+      phone:      form.telephone.value,
+      commune:    '—',
+      projet:     form.prestation.value || 'Non précisé',
+      message:    form.message.value    || '—',
+    }, '9xwgFTKD01ItBXD0r')
+    .then(() => {
+      btn.textContent = '✓ Demande envoyée — nous vous rappelons bientôt !';
+      btn.style.background = '#2a5c35';
+      btn.style.color = '#c8e6a0';
+    })
+    .catch(() => {
+      btn.textContent = 'Erreur — réessayez ou appelez-nous';
+      btn.style.background = '#e88472';
+      btn.disabled = false;
+    });
   }
 </script>
 </body>
