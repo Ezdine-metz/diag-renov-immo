@@ -321,7 +321,7 @@ function EcoAidesSimulator({ tk }) {
 
 // ── EmailJS config ─────────────────────────────────────────────
 // Replace these three values with your own from emailjs.com
-const EMAILJS_SERVICE_ID  = 'service_mgz9j18';
+const EMAILJS_SERVICE_ID  = 'service_9poh27w';
 const EMAILJS_TEMPLATE_ID = 'template_ixz0xiv';
 const EMAILJS_PUBLIC_KEY  = '9xwgFTKD01ItBXD0r';
 
