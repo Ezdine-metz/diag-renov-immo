@@ -343,7 +343,7 @@ function EcoContactForm({ tk }) {
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
       {
-        to_email:   'iyedselmifizz@gmail.com',
+        to_email:   'diagrenovimmo@gmail.com',
         from_name:  form.nom.value,
         from_email: form.email.value,
         phone:      form.telephone.value || 'Non renseigné',
