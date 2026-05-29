@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200, initial-scale=1.0, shrink-to-fit=no">
+<title>Nos Services — DPE, Audit, PV, Chauffage | Diag Renov Immo</title>
+<meta name="description" content="DPE, audit énergétique complet, étude photovoltaïque, étude chauffage. 4 prestations indépendantes pour les propriétaires de Meurthe-et-Moselle.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0e2a1e">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Nos Services — Diag Renov Immo">
+<meta property="og:description" content="DPE, audit énergétique, étude PV et chauffage. Tarifs clairs, rapports pédagogiques, indépendance totale.">
+<meta property="og:site_name" content="Diag Renov Immo">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230e2a1e'/><text x='50%' y='54%' font-size='20' text-anchor='middle' dominant-baseline='middle' fill='%23c8e6a0' font-family='serif'>◐</text></svg>">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: #0e2a1e; color: #f1ede0; scroll-behavior: smooth; }
+  img, svg { display: block; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  textarea, input { font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="../data.jsx"></script>
+<script type="text/babel" src="eco-data.jsx"></script>
+<script type="text/babel" src="eco-shared.jsx"></script>
+<script type="text/babel" src="eco-services.jsx"></script>
+
+<script type="text/babel">
+ReactDOM.createRoot(document.getElementById('root')).render(<EcoServices />);
+</script>
+</body>
+</html>
