@@ -319,8 +319,12 @@ function EcoAidesSimulator({ tk }) {
   );
 }
 
-// Contact form — submits via FormSubmit.co AJAX (no page redirect)
-// IMPORTANT: First submission triggers a one-time verification email to iyedselmu@gmail.com
+// ── EmailJS config ─────────────────────────────────────────────
+// Replace these three values with your own from emailjs.com
+const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz456'
+const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Account → API Keys → Public Key
+
 function EcoContactForm({ tk }) {
   const [selected, setSelected] = React.useState([]);
   const [status, setStatus] = React.useState('idle'); // idle | sending | sent | error
@@ -334,27 +338,22 @@ function EcoContactForm({ tk }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const data = new FormData(form);
-    data.set('Projet', selected.join(', ') || 'Non précisé');
-    const replyEmail = data.get('Email');
-    if (replyEmail) data.set('_replyto', replyEmail);
     setStatus('sending');
-    fetch('https://formsubmit.co/ajax/iyedselmu@gmail.com', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: data,
-    })
-      .then(r => {
-        console.log('[FormSubmit] status:', r.status);
-        return r.json().then(json => {
-          console.log('[FormSubmit] response:', JSON.stringify(json));
-          r.ok && json.success === 'true' ? setStatus('sent') : setStatus('error');
-        });
-      })
-      .catch(err => {
-        console.error('[FormSubmit] fetch error:', err);
-        setStatus('error');
-      });
+    emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name:  form.nom.value,
+        from_email: form.email.value,
+        phone:      form.telephone.value || 'Non renseigné',
+        commune:    form.commune.value   || 'Non renseignée',
+        projet:     selected.join(', ')  || 'Non précisé',
+        message:    form.message.value   || '—',
+      },
+      EMAILJS_PUBLIC_KEY
+    )
+      .then(() => setStatus('sent'))
+      .catch(err => { console.error('[EmailJS]', err); setStatus('error'); });
   };
 
   if (status === 'sent') {
@@ -374,20 +373,16 @@ function EcoContactForm({ tk }) {
       onSubmit={handleSubmit}
       style={{ background: tk.bg, color: tk.ink, borderRadius: 32, padding: 48 }}
     >
-      <input type="hidden" name="_subject" value="Nouvelle demande — Diag Renov Immo" />
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_template" value="box" />
-
       <h3 style={{ ...tk.display, fontSize: 32, margin: '0 0 28px', lineHeight: 1.1 }}>
         Écrivez-nous <span style={{ color: tk.accent, fontStyle: 'italic' }}>ici.</span>
       </h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        <EcoFormField tk={tk} name="Nom" label="Prénom et nom" placeholder="Marie Dupont" required />
+        <EcoFormField tk={tk} name="nom" label="Prénom et nom" placeholder="Marie Dupont" required />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-          <EcoFormField tk={tk} name="Téléphone" label="Téléphone" placeholder="06 …" />
-          <EcoFormField tk={tk} name="Email" label="Email" placeholder="marie@…" type="email" required />
+          <EcoFormField tk={tk} name="telephone" label="Téléphone" placeholder="06 …" />
+          <EcoFormField tk={tk} name="email" label="Email" placeholder="marie@…" type="email" required />
         </div>
-        <EcoFormField tk={tk} name="Commune" label="Commune" placeholder="Nancy, Lunéville…" />
+        <EcoFormField tk={tk} name="commune" label="Commune" placeholder="Nancy, Lunéville…" />
 
         <div>
           <label style={{ display: 'block', fontSize: 11, color: tk.inkMute, ...tk.mono, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Type de projet</label>
@@ -405,7 +400,7 @@ function EcoContactForm({ tk }) {
           </div>
         </div>
 
-        <EcoFormField tk={tk} name="Message" label="Votre projet en quelques mots" placeholder="ex : pavillon 1970 classé F, on voudrait baisser les factures" multiline />
+        <EcoFormField tk={tk} name="message" label="Votre projet en quelques mots" placeholder="ex : pavillon 1970 classé F, on voudrait baisser les factures" multiline />
 
         {status === 'error' && (
           <p style={{ fontSize: 13, color: '#c0392b', margin: 0 }}>
